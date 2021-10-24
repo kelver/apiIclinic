@@ -30,8 +30,6 @@ services:
             - ./docker/nginx/:/etc/nginx/conf.d/
         networks:
             - apiIclinic
-    php:
-      image: php:8-fpm
 
     # db mysql
     mysql:

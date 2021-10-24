@@ -33,6 +33,8 @@ services:
             - php
         networks:
             - apiIclinic
+    php:
+        image: php:8-fpm
     # queue
     queue:
         build:
