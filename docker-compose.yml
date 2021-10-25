@@ -4,7 +4,7 @@ services:
     apiIclinic:
         build:
             args:
-                user: Kelver
+                user: kelver
                 uid: 1000
             context: ./
             dockerfile: Dockerfile
@@ -25,21 +25,31 @@ services:
         restart: unless-stopped
         ports:
             - 80:80
-            - 443:443
         volumes:
             - ./:/var/www
             - ./docker/nginx/:/etc/nginx/conf.d/
-        links:
-            - php
         networks:
             - apiIclinic
-    php:
-        image: php:8-fpm
+
+    # db mysql
+    mysql:
+        image: mysql:5.7.22
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_USERNAME}
+        volumes:
+            - ./.docker/mysql/dbdata:/var/lib/mysql
+        networks:
+            - apiIclinic
+
     # queue
     queue:
         build:
             args:
-                user: carlos
+                user: kelver
                 uid: 1000
             context: ./
             dockerfile: Dockerfile
@@ -59,5 +69,5 @@ services:
             - apiIclinic
 
 networks:
-    apiIclinic:
+    projectx:
         driver: bridge
