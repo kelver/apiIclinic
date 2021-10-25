@@ -14,6 +14,7 @@ services:
         volumes:
             - ./:/var/www
         depends_on:
+            - nginx
             - redis
             - queue
         networks:
@@ -69,5 +70,5 @@ services:
             - apiIclinic
 
 networks:
-    projectx:
+    apiIclinic:
         driver: bridge
